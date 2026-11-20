@@ -15,7 +15,7 @@ since that is where you go next. An app in that position should be **indistingui
 the operating system**, because every pixel spent announcing itself is a pixel spent making
 the user re-learn a control they already know.
 
-That is the exact opposite of the bet [pc-cleaner](https://github.com/dara-oladapo/pc-cleaner)
+That is the exact opposite of the bet [pc-cleaner](https://github.com/wiselead-oss/pc-cleaner)
 makes, and deliberately so. pc-cleaner is a full-window app you sit inside and work in; it
 earns a palette, a typeface and a signature readout of its own. Two apps, two jobs, two
 answers. Don't port tokens between them.
@@ -36,7 +36,7 @@ choose.
 
 .NET MAUI. One head per OS: `net10.0-windows10.0.19041.0` (unpackaged) and
 `net10.0-maccatalyst`. No Linux head, because MAUI has no Linux target — see
-[#3](https://github.com/dara-oladapo/power-helper/issues/3).
+[#3](https://github.com/wiselead-oss/power-helper/issues/3).
 
 Unpackaged on Windows is not a preference. The app enables and disables a PCI device, which
 needs administrator rights, and **an MSIX-packaged app cannot request elevation** — its

@@ -13,7 +13,7 @@ public readonly record struct UpdateInfo(Version LatestVersion, string ReleaseUr
 /// </summary>
 public sealed class UpdateCheckService
 {
-    private const string LatestReleaseUrl = "https://api.github.com/repos/dara-oladapo/power-helper/releases/latest";
+    private const string LatestReleaseUrl = "https://api.github.com/repos/wiselead-oss/power-helper/releases/latest";
 
     private static readonly HttpClient HttpClient = BuildClient();
 
@@ -36,7 +36,7 @@ public sealed class UpdateCheckService
             }
 
             return latestVersion > currentVersion
-                ? new UpdateInfo(latestVersion, release.HtmlUrl ?? "https://github.com/dara-oladapo/power-helper/releases")
+                ? new UpdateInfo(latestVersion, release.HtmlUrl ?? "https://github.com/wiselead-oss/power-helper/releases")
                 : null;
         }
         catch (Exception ex) when (ex is HttpRequestException or TaskCanceledException or JsonException)

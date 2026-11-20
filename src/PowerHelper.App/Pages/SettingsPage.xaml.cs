@@ -12,7 +12,7 @@ namespace PowerHelper.App.Pages;
 
 public partial class SettingsPage : ContentPage
 {
-    private const string RepoUrl = "https://github.com/dara-oladapo/power-helper";
+    private const string RepoUrl = "https://github.com/wiselead-oss/power-helper";
 
     private readonly PowerHelperEngine _engine;
 

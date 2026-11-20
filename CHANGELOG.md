@@ -63,7 +63,7 @@ Initial release.
 - Start with Windows via an elevated logon task, avoiding repeated UAC prompts.
 - Resizable, responsive settings window alongside the tray menu, staying in sync with it.
 
-[0.2.0]: https://github.com/dara-oladapo/power-helper/compare/v0.1.2...v0.2.0
-[0.1.2]: https://github.com/dara-oladapo/power-helper/compare/v0.1.1...v0.1.2
-[0.1.1]: https://github.com/dara-oladapo/power-helper/compare/v0.1.0...v0.1.1
-[0.1.0]: https://github.com/dara-oladapo/power-helper/releases/tag/v0.1.0
+[0.2.0]: https://github.com/wiselead-oss/power-helper/compare/v0.1.2...v0.2.0
+[0.1.2]: https://github.com/wiselead-oss/power-helper/compare/v0.1.1...v0.1.2
+[0.1.1]: https://github.com/wiselead-oss/power-helper/compare/v0.1.0...v0.1.1
+[0.1.0]: https://github.com/wiselead-oss/power-helper/releases/tag/v0.1.0
