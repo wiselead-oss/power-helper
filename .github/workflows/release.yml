@@ -85,17 +85,44 @@ jobs:
   macos:
     name: macOS
     needs: version
-    runs-on: macos-latest
+    # xcode-27, not macos-latest (Xcode 26.6 at most): the current Mac Catalyst SDK pack refuses to build
+    # against Xcode 26, and an app built with the Xcode 26 SDK crashes at launch on macOS 27.
+    runs-on: xcode-27
+    env:
+      # Xcode and the workload set are pinned as a PAIR; each Mac Catalyst SDK pack requires exactly one
+      # Xcode major.minor. 10.0.404.0 -> Mac Catalyst SDK 27.2.10000 -> Xcode 27.2.
+      XCODE_VERSION: "27.2"
+      MACCATALYST_WORKLOAD_SET: "10.0.404.0"
     steps:
       - uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          XCODE_APP="/Applications/Xcode_${XCODE_VERSION}.app"
+          if [ ! -d "$XCODE_APP" ]; then
+            echo "::error::$XCODE_APP is not on this runner image. Installed:"; ls -d /Applications/Xcode*.app
+            exit 1
+          fi
+          sudo xcode-select -s "$XCODE_APP"
+          xcodebuild -version
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
 
-      - name: Install MAUI workload
-        run: dotnet workload install maui-maccatalyst --skip-sign-check
+      # A workload set only installs onto an SDK of the same feature band, so that is checked first.
+      - name: Install MAUI Mac Catalyst workload (pinned)
+        run: |
+          SDK=$(dotnet --version)
+          SDK_BAND=$(echo "$SDK" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*//')
+          SET_BAND=$(echo "$MACCATALYST_WORKLOAD_SET" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*//')
+          if [ "$SDK_BAND" != "$SET_BAND" ]; then
+            echo "::error::SDK $SDK is band ${SDK_BAND}xx but MACCATALYST_WORKLOAD_SET $MACCATALYST_WORKLOAD_SET is band ${SET_BAND}xx. Pick a workload set (and matching Xcode) for the new band."
+            exit 1
+          fi
+          dotnet workload install maui-maccatalyst --version "$MACCATALYST_WORKLOAD_SET" --skip-sign-check
+          dotnet workload list
 
       # Universal, so one download covers Apple Silicon and the Intel Macs that can still
       # run it. RuntimeIdentifiers (plural) is what asks for a fat binary; the semicolon is
