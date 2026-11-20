@@ -115,8 +115,8 @@ jobs:
       - name: Install MAUI Mac Catalyst workload (pinned)
         run: |
           SDK=$(dotnet --version)
-          SDK_BAND=$(echo "$SDK" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*//')
-          SET_BAND=$(echo "$MACCATALYST_WORKLOAD_SET" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*//')
+          SDK_BAND=$(echo "$SDK" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*/\1/')
+          SET_BAND=$(echo "$MACCATALYST_WORKLOAD_SET" | sed -E 's/^([0-9]+\.[0-9]+\.[0-9]).*/\1/')
           if [ "$SDK_BAND" != "$SET_BAND" ]; then
             echo "::error::SDK $SDK is band ${SDK_BAND}xx but MACCATALYST_WORKLOAD_SET $MACCATALYST_WORKLOAD_SET is band ${SET_BAND}xx. Pick a workload set (and matching Xcode) for the new band."
             exit 1
